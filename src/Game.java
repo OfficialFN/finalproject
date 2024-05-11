@@ -10,7 +10,7 @@ public class Game {
         JFrame frame = new JFrame();
         GamePanel gPanel = new GamePanel();
         JPanel b = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        s = new JLabel(""+score);
+        s = new JLabel("Score: "+score);
         b.add(s);
         gPanel.add(b, BorderLayout.NORTH);
 
@@ -20,6 +20,20 @@ public class Game {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500,500);
         frame.setVisible(true);
+    }
+
+    public void gameLoop() {
+        final int targetfps = 60;
+        final long nsbetween = 1000000000/ targetfps;
+        long looptime = System.nanoTime();
+        while (true) {
+            long now = System.nanoTime();
+            long timedif = now - looptime;
+        }
+    }
+
+    public void render() {
+        GamePanel.repaint();
     }
     class GamePanel extends JPanel implements MouseListener, MouseMotionListener{
         boolean[][] sand = new boolean[500][500];
@@ -48,6 +62,16 @@ public class Game {
                     }
                 }
             }
+            score = 0;
+            for (int i = 0; i < sand.length; i++) {
+                for (int j = 150; j < sand[0].length; j++) {
+                    if (sand[i][j]) {
+                        score++;
+                        s.setText("Score: "+score);
+
+                    }
+                }
+            }
 
         }
 
@@ -61,8 +85,6 @@ public class Game {
                         int y = e.getY() + j;
                         if (x >= 0 && x < sand.length && y >= 0 && y < sand[0].length) {
                             sand[x][y] = true;
-                            score++;
-                            s.setText(""+score);
                         }
                     }
                 }
