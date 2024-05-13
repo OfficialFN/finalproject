@@ -4,14 +4,18 @@ import java.awt.*;
 import java.awt.event.*;
 public class Game {
     int score = 0;
+    int fps;
     JLabel s;
+    JLabel fpslabel;
     public Game() {
 
         JFrame frame = new JFrame();
         GamePanel gPanel = new GamePanel();
         JPanel b = new JPanel(new FlowLayout(FlowLayout.LEFT));
         s = new JLabel("Score: "+score);
+        fpslabel = new JLabel("FPS: " + fps);
         b.add(s);
+        b.add(fpslabel);
         gPanel.add(b, BorderLayout.NORTH);
 
 
@@ -22,19 +26,34 @@ public class Game {
         frame.setVisible(true);
     }
 
-    public void gameLoop() {
+    public void gameLoop(){
         final int targetfps = 60;
         final long nsbetween = 1000000000/ targetfps;
         long looptime = System.nanoTime();
+        long lastFpsTime = 0;
         while (true) {
             long now = System.nanoTime();
             long timedif = now - looptime;
+            looptime = now;
+            lastFpsTime += timedif;
+            fps++;
+            if (lastFpsTime >= 1000000000)
+            {
+                fpslabel.setText("FPS "+fps);
+                lastFpsTime = 0;
+                fps = 0;
+            }
+
+
+
+            try {
+                Thread.sleep( (looptime-System.nanoTime() + nsbetween)/1000000 );
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void render() {
-        GamePanel.repaint();
-    }
     class GamePanel extends JPanel implements MouseListener, MouseMotionListener{
         boolean[][] sand = new boolean[500][500];
         public GamePanel() {
