@@ -7,10 +7,11 @@ public class Game {
     int fps;
     JLabel s;
     JLabel fpslabel;
+    GamePanel gPanel;
     public Game() {
 
         JFrame frame = new JFrame();
-        GamePanel gPanel = new GamePanel();
+        gPanel = new GamePanel();
         JPanel b = new JPanel(new FlowLayout(FlowLayout.LEFT));
         s = new JLabel("Score: "+score);
         fpslabel = new JLabel("FPS: " + fps);
@@ -20,10 +21,10 @@ public class Game {
 
 
         frame.add(gPanel);
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500,500);
         frame.setVisible(true);
+        gameLoop();
     }
 
     public void gameLoop(){
@@ -44,7 +45,7 @@ public class Game {
                 fps = 0;
             }
 
-
+            gPanel.render();
 
             try {
                 Thread.sleep( (looptime-System.nanoTime() + nsbetween)/1000000 );
@@ -66,8 +67,9 @@ public class Game {
                 }
             }
         }
-
-        // This is the method that draws everything
+        public void render() {
+            repaint();
+        }
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             for (int i = 0; i < sand.length; i++) {
@@ -95,7 +97,6 @@ public class Game {
         }
 
         public void mousePressed(MouseEvent e) {
-            System.out.println("a");
 
             for (int i = -12; i <= 12; i++) {
                 for (int j = -12; j <= 12; j++) {
@@ -108,7 +109,6 @@ public class Game {
                     }
                 }
             }
-            repaint();
         }
 
         public void mouseReleased(MouseEvent e) {
