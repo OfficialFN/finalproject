@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
 public class Game {
@@ -8,6 +7,10 @@ public class Game {
     JLabel s;
     JLabel fpslabel;
     GamePanel gPanel;
+    boolean isHolding = false;
+    int lastlocx;
+    int lastlocy;
+    //mouse pressed gives location of first pressed. set lastlocation var to that and then mousedragged is the location of where it is currently, so draw line between and set last location to mousedragged(where it is currently)
     public Game() {
 
         JFrame frame = new JFrame();
@@ -67,6 +70,8 @@ public class Game {
                 }
             }
         }
+
+
         public void render() {
             repaint();
         }
@@ -97,6 +102,9 @@ public class Game {
         }
 
         public void mousePressed(MouseEvent e) {
+            isHolding = true;
+            lastlocx = e.getX();
+            lastlocy = e.getY();
 
             for (int i = -12; i <= 12; i++) {
                 for (int j = -12; j <= 12; j++) {
@@ -124,6 +132,10 @@ public class Game {
         }
 
         public void mouseDragged(MouseEvent e) {
+            int x = e.getX();
+            int y = e.getY();
+            double slope = (y - lastlocy) / (x - lastlocx);
+
             mousePressed(e);
         }
 
@@ -135,5 +147,8 @@ public class Game {
 
         }
 
+        public void connect(int x, int y) {
+
+        }
     }
 }
