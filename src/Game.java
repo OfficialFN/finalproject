@@ -31,7 +31,7 @@ public class Game {
     }
 
     public void gameLoop(){
-        final int targetfps = 60;
+        final int targetfps = 100;
         final long nsbetween = 1000000000/ targetfps;
         long looptime = System.nanoTime();
         long lastFpsTime = 0;
@@ -134,8 +134,15 @@ public class Game {
         public void mouseDragged(MouseEvent e) {
             int x = e.getX();
             int y = e.getY();
-            double slope = (y - lastlocy) / (x - lastlocx);
-
+            int step = 15;
+            int stepX = (x - lastlocx) / step;
+            int stepY = (y - lastlocy) / step;
+            for (int a = 0; a < step; a++) {
+                int newX = lastlocx + stepX * a;
+                int newY = lastlocy + stepY * a;
+                System.out.println(newX + " " + newY);
+                connect(newX,newY);
+            }
             mousePressed(e);
         }
 
@@ -148,7 +155,16 @@ public class Game {
         }
 
         public void connect(int x, int y) {
+            for (int i = -12; i <= 12; i++) {
+                for (int j = -12; j <= 12; j++) {
+                    if (i * i + j * j <= 144) {
+                        if (x >= 0 && x < sand.length && y >= 0 && y < sand[0].length) {
+                            sand[x+i][y+j] = true;
+                        }
 
+                    }
+                }
+            }
         }
     }
 }
