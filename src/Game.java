@@ -10,7 +10,7 @@ public class Game {
     boolean isHolding = false;
     int lastlocx;
     int lastlocy;
-    //mouse pressed gives location of first pressed. set lastlocation var to that and then mousedragged is the location of where it is currently, so draw line between and set last location to mousedragged(where it is currently)
+
     public Game() {
 
         JFrame frame = new JFrame();

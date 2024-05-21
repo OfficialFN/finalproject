@@ -1,6 +1,7 @@
 import javax.swing.*;
 public class Main {
     public static void main(String[] args) {
-        Game game = new Game();
+        Home home = new Home();
+        //Game game = new Game();
     }
 }
