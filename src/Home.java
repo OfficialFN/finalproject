@@ -4,11 +4,13 @@ import java.awt.event.*;
 
 
 public class Home implements ActionListener{
-    JFrame home;
+    JFrame frame;
+    JPanel home;
     JButton playbutton;
     JButton howto;
     public Home () {
-        home = new JFrame();
+        frame = new JFrame();
+        home = new JPanel();
         home.setLayout(new FlowLayout());
         playbutton = new JButton("Play");
         playbutton.setPreferredSize(new Dimension(100,50));
@@ -19,15 +21,15 @@ public class Home implements ActionListener{
         howto.setPreferredSize(new Dimension(100,50));
         home.add(howto);
 
-
-        home.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        home.setSize(500,500);
-        home.setVisible(true);
+        frame.add(home);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(500,500);
+        frame.setVisible(true);
 
 
     }
     public void actionPerformed(ActionEvent e) {
-        home.setVisible(false);
-        new Game();
+        frame.remove(home);
+        frame.add(new Game());
     }
 }

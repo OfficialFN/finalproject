@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-public class Game {
+public class Game extends JPanel {
     int score = 0;
     int fps;
     JLabel s;
@@ -10,11 +10,10 @@ public class Game {
     boolean isHolding = false;
     int lastlocx;
     int lastlocy;
-    JFrame frame;
+
 
     public Game() {
 
-        frame = new JFrame();
         gPanel = new GamePanel();
         JPanel b = new JPanel(new FlowLayout(FlowLayout.LEFT));
         s = new JLabel("Score: "+score);
@@ -23,16 +22,15 @@ public class Game {
         b.add(fpslabel);
         gPanel.add(b, BorderLayout.NORTH);
 
-
-        frame.add(gPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500,500);
-        frame.setVisible(true);
-        gameLoop();
+        this.add(gPanel);
+        this.setSize(500,500);
+        this.setVisible(true);
+        Thread loopThread = new Thread(this::gameLoop);
+        loopThread.start();
     }
 
     public void gameLoop(){
-        final int targetfps = 100;
+        final int targetfps = 60;
         final long nsbetween = 1000000000/ targetfps;
         long looptime = System.nanoTime();
         long lastFpsTime = 0;
@@ -75,8 +73,10 @@ public class Game {
 
         public void render() {
             repaint();
+            //System.out.println("repaint");
         }
         protected void paintComponent(Graphics g) {
+            System.out.println("a");
             super.paintComponent(g);
             for (int i = 0; i < sand.length; i++) {
                 for (int j = 0; j < sand[0].length; j++) {
