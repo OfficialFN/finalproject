@@ -10,10 +10,11 @@ public class Game {
     boolean isHolding = false;
     int lastlocx;
     int lastlocy;
+    JFrame frame;
 
     public Game() {
 
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         gPanel = new GamePanel();
         JPanel b = new JPanel(new FlowLayout(FlowLayout.LEFT));
         s = new JLabel("Score: "+score);
